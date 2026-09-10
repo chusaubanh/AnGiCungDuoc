@@ -1,6 +1,6 @@
 'use client';
 import { readCookie, writeCookie } from '@/lib/cookies';
-import { createSpinProfile, spinProgress, createFoodSelector, stopFraction } from '@/lib/case-mechanics';
+import { createSpinProfile, spinProgress, createFoodSelector, stopFraction, priceRarity } from '@/lib/case-mechanics';
 import { foods, type Food } from '@/lib/foods';
 import { copy, foodName, foodSubtitle, priceLabel, type Language } from '@/lib/i18n';
 import { useLocalSpinCount } from '@/hooks/use-local-spin-count';
@@ -10,11 +10,30 @@ import { personalFoods, personalSelector } from '@/lib/personal-pool';
 import { CaseAudio } from '@/lib/case-audio';
 import { flushSync } from 'react-dom';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowUpRight, AudioLines, Volume2, VolumeX, Sparkles, Utensils, Leaf, Flame, RotateCcw, MapPin, ShoppingBag } from 'lucide-react';
+import { 
+  ArrowUpRight, 
+  AudioLines, 
+  Volume2, 
+  VolumeX, 
+  Sparkles, 
+  Utensils, 
+  Leaf, 
+  Flame, 
+  RotateCcw, 
+  MapPin, 
+  ShoppingBag,
+  Search,
+  CheckCheck,
+  XCircle,
+  SlidersHorizontal,
+  RefreshCw,
+  Plus
+} from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Switch } from '@/components/ui/switch';
 import { BrandLogo } from '@/components/brand-logo';
+import { LandingPage } from '@/components/landing-page';
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
@@ -122,19 +141,38 @@ const Card = memo(function Card({
   language,
   small = false,
   slot,
+  disabled = false,
+  onToggle,
 }: {
   food: Food;
   language: Language;
   small?: boolean;
   slot?: number;
+  disabled?: boolean;
+  onToggle?: () => void;
 }) {
   const mystery = !small && food.rarity === 4;
   const t = copy[language];
+  const vi = language === 'vi';
   return (
     <div
-      className={`food-card ${small ? 'small' : ''} ${mystery ? 'mystery-card' : ''}`}
+      className={`food-card ${small ? 'small' : ''} ${mystery ? 'mystery-card' : ''} ${disabled ? 'is-disabled' : ''} ${onToggle ? 'is-interactive' : ''}`}
       data-slot-id={slot}
       data-food-id={food.image}
+      onClick={onToggle}
+      role={onToggle ? 'button' : undefined}
+      tabIndex={onToggle ? 0 : undefined}
+      title={
+        onToggle
+          ? disabled
+            ? vi
+              ? 'Món đang tắt. Bấm để bật lại!'
+              : 'Disabled. Click to enable!'
+            : vi
+            ? 'Món đang bật. Bấm để tắt!'
+            : 'Active. Click to disable!'
+          : undefined
+      }
       style={
         {
           '--rarity': colors[food.rarity],
@@ -143,6 +181,11 @@ const Card = memo(function Card({
       }
     >
       <span className="tier">{t.tiers[food.rarity]}</span>
+      {small && onToggle && (
+        <span className={`toggle-pill ${disabled ? 'disabled' : 'active'}`}>
+          {disabled ? (vi ? '✕ Đã tắt' : '✕ Off') : (vi ? '✓ Đang bật' : '✓ On')}
+        </span>
+      )}
       {mystery ? <MysteryArt language={language} /> : <FoodImage food={food} language={language} />}
       <div className="card-copy">
         <strong>{mystery ? t.mystery : foodName(food, language)}</strong>
@@ -151,6 +194,80 @@ const Card = memo(function Card({
     </div>
   );
 });
+
+function matchCategory(food: Food, category: string, language: Language, isDisabled: boolean): boolean {
+  if (category === 'all') return true;
+  if (category === 'disabled') return isDisabled;
+  if (category === 'custom') return !!food.customId;
+  if (category === 'chay') return !!food.veg;
+
+  const text = `${food.name} ${food.sub || ''} ${foodName(food, language)}`.toLowerCase();
+
+  if (category === 'com') {
+    return text.includes('cơm') || text.includes('rice') || text.includes('bibimbap') || text.includes('gyudon') || text.includes('risotto');
+  }
+  if (category === 'bun') {
+    return (
+      text.includes('phở') ||
+      text.includes('bún') ||
+      text.includes('mì') ||
+      text.includes('hủ tiếu') ||
+      text.includes('noodle') ||
+      text.includes('ramen') ||
+      text.includes('udon') ||
+      text.includes('spaghetti') ||
+      text.includes('pasta') ||
+      text.includes('miến') ||
+      text.includes('soba') ||
+      text.includes('bánh canh')
+    );
+  }
+  if (category === 'banhmi') {
+    return (
+      text.includes('bánh mì') ||
+      text.includes('cuốn') ||
+      text.includes('bánh cuốn') ||
+      text.includes('bánh xèo') ||
+      text.includes('sandwich') ||
+      text.includes('burger') ||
+      text.includes('wrap') ||
+      text.includes('burrito') ||
+      text.includes('taco') ||
+      text.includes('kebab')
+    );
+  }
+  if (category === 'lau') {
+    return (
+      text.includes('lẩu') ||
+      text.includes('nướng') ||
+      text.includes('cháo') ||
+      text.includes('hotpot') ||
+      text.includes('bbq') ||
+      text.includes('steak') ||
+      text.includes('congee')
+    );
+  }
+  if (category === 'ngoai') {
+    return (
+      text.includes('sushi') ||
+      text.includes('pizza') ||
+      text.includes('ramen') ||
+      text.includes('udon') ||
+      text.includes('burger') ||
+      text.includes('pasta') ||
+      text.includes('curry') ||
+      text.includes('kimbap') ||
+      text.includes('tacos') ||
+      text.includes('dim sum') ||
+      text.includes('fish & chips') ||
+      text.includes('tonkatsu') ||
+      text.includes('kimchi') ||
+      text.includes('biryani') ||
+      text.includes('falafel')
+    );
+  }
+  return true;
+}
 
 export default function Home() {
   const { count: localSpins, enabled: counterEnabled, recordSpin } = useLocalSpinCount();
@@ -257,17 +374,120 @@ export default function Home() {
 
   const [visibleStart, setVisibleStart] = useState(0);
   const t = copy[language];
+  const vi = language === 'vi';
+  const [view, setView] = useState<'app' | 'landing'>(() => {
+    if (typeof window !== 'undefined' && window.location.hash === '#wheel') return 'app';
+    return 'landing';
+  });
+
+  useEffect(() => {
+    const handleHash = () => {
+      if (window.location.hash === '#wheel') setView('app');
+      else setView('landing');
+    };
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
+
+  const [catalogCategory, setCatalogCategory] = useState('all');
+  const [catalogSearch, setCatalogSearch] = useState('');
+
+  const allDishes: Food[] = useMemo(() => {
+    const customFoods: Food[] = preferences.profile.custom.map((f, idx) => ({
+      ...f,
+      customId: f.id,
+      image: -1000 - idx,
+      sub: 'Món của tôi',
+      quip: '',
+      rarity: priceRarity(f.price),
+    }));
+    return [...foods, ...customFoods];
+  }, [preferences.profile.custom]);
+
+  const disabledSet = useMemo(
+    () => new Set(preferences.profile.disabled),
+    [preferences.profile.disabled]
+  );
+
+  const toggleFood = useCallback(
+    (food: Food) => {
+      if (spinning) return;
+      if (food.customId) {
+        preferences.save({
+          ...preferences.profile,
+          custom: preferences.profile.custom.filter((c) => c.id !== food.customId),
+        });
+        return;
+      }
+      const id = food.image;
+      const isOff = preferences.profile.disabled.includes(id);
+      if (!isOff && preferences.profile.disabled.length >= foods.length - 1 && preferences.profile.custom.length === 0) {
+        return;
+      }
+      const nextDisabled = isOff
+        ? preferences.profile.disabled.filter((d) => d !== id)
+        : [...preferences.profile.disabled, id];
+      preferences.save({
+        ...preferences.profile,
+        disabled: nextDisabled,
+      });
+    },
+    [preferences, spinning]
+  );
+
+  const enableAll = useCallback(() => {
+    if (spinning) return;
+    preferences.save({
+      ...preferences.profile,
+      disabled: [],
+    });
+  }, [preferences, spinning]);
+
+  const disableAll = useCallback(() => {
+    if (spinning) return;
+    const canDisableAllStandard = preferences.profile.custom.length > 0;
+    preferences.save({
+      ...preferences.profile,
+      disabled: canDisableAllStandard ? foods.map((f) => f.image) : foods.slice(1).map((f) => f.image),
+    });
+  }, [preferences, spinning]);
+
+  const displayedDishes = useMemo(() => {
+    const q = catalogSearch.trim().toLowerCase();
+    return allDishes.filter((f) => {
+      const isDisabled = disabledSet.has(f.image);
+      const matchesCat = matchCategory(f, catalogCategory, language, isDisabled);
+      if (!matchesCat) return false;
+      if (!q) return true;
+      const nameStr = `${f.name} ${f.sub || ''} ${foodName(f, language)}`.toLowerCase();
+      return nameStr.includes(q);
+    });
+  }, [allDishes, catalogCategory, catalogSearch, disabledSet, language]);
+
   const inventoryCards = useMemo(
     () =>
-      [...eligible]
-        .sort(
-          (a, b) =>
+      [...displayedDishes]
+        .sort((a, b) => {
+          const aDis = disabledSet.has(a.image);
+          const bDis = disabledSet.has(b.image);
+          if (aDis !== bDis) return aDis ? 1 : -1;
+          return (
             a.rarity - b.rarity ||
             a.price - b.price ||
             foodName(a, language).localeCompare(foodName(b, language), language)
-        )
-        .map((f) => <Card food={f} language={language} small key={f.customId ?? f.image} />),
-    [eligible, language]
+          );
+        })
+        .map((f) => (
+          <Card
+            food={f}
+            language={language}
+            small
+            key={f.customId ?? f.image}
+            disabled={disabledSet.has(f.image)}
+            onToggle={() => toggleFood(f)}
+          />
+        )),
+    [displayedDishes, disabledSet, language, toggleFood]
   );
 
   const track = useRef<HTMLDivElement>(null);
@@ -385,9 +605,45 @@ export default function Home() {
       <div className="ambient-glow glow-2" />
 
       <header>
-        <a href={`${basePath}/`} className="brand" aria-label="Ăn Gì Cũng Được?">
+        <a 
+          href={`${basePath}/`} 
+          className="brand" 
+          aria-label="Ăn Gì Cũng Được?"
+          onClick={(e) => {
+            e.preventDefault();
+            setView('landing');
+            window.location.hash = '#landing';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        >
           <BrandLogo />
         </a>
+
+        {/* Navigation Switch between Landing & Wheel */}
+        <nav className="header-nav-pills" aria-label="Điều hướng chính">
+          <button
+            className={`nav-pill ${view === 'landing' ? 'is-active' : ''}`}
+            onClick={() => {
+              setView('landing');
+              window.location.hash = '#landing';
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          >
+            <Sparkles size={15} />
+            <span>{vi ? 'Giới Thiệu' : 'About'}</span>
+          </button>
+          <button
+            className={`nav-pill ${view === 'app' ? 'is-active' : ''} nav-pill-wheel`}
+            onClick={() => {
+              setView('app');
+              window.location.hash = '#wheel';
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          >
+            <Utensils size={15} />
+            <span>{vi ? 'Vòng Quay Món' : 'Roulette Wheel'}</span>
+          </button>
+        </nav>
 
         <div className="header-actions">
           <PreferencesPanel preferences={preferences} language={language} disabled={spinning} />
@@ -421,7 +677,18 @@ export default function Home() {
           </div>
         )}
 
-        {/* Friendly Hero Intro */}
+        {view === 'landing' ? (
+          <LandingPage
+            language={language}
+            onStartSpinning={() => {
+              setView('app');
+              window.location.hash = '#wheel';
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        ) : (
+          <>
+            {/* Friendly Hero Intro */}
         <div className="intro">
           <div className="intro-badge">
             <span className="badge-dot" />
@@ -689,7 +956,7 @@ export default function Home() {
           </DialogContent>
         </Dialog>
 
-        {/* Inventory Food Catalog */}
+        {/* Inventory Food Catalog with Direct Click-to-Toggle & Categories */}
         <section className="inventory">
           <div className="section-heading">
             <div className="section-heading-left">
@@ -699,7 +966,10 @@ export default function Home() {
               </span>
               <div className="inventory-title-row">
                 <h2>
-                  {t.items} <span className="count-pill">{eligible.length.toString().padStart(2, '0')}</span>
+                  {t.items}{' '}
+                  <span className="count-pill">
+                    {eligible.length.toString().padStart(2, '0')} / {allDishes.length}
+                  </span>
                 </h2>
                 <PreferencesPanel
                   preferences={preferences}
@@ -720,8 +990,113 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="inventory-grid">{inventoryCards}</div>
+          {/* Instant Filter Toolbar */}
+          <div className="catalog-toolbar">
+            <div className="catalog-toolbar-top">
+              <div className="catalog-search-wrap">
+                <Search size={16} className="catalog-search-icon" />
+                <input
+                  type="text"
+                  className="catalog-search-input"
+                  placeholder={
+                    vi
+                      ? 'Tìm món để bật/tắt (VD: phở, bún chả, cơm tấm, pizza...)'
+                      : 'Search dishes to toggle (e.g. pho, noodles, rice, pizza...)'
+                  }
+                  value={catalogSearch}
+                  onChange={(e) => setCatalogSearch(e.target.value)}
+                />
+                {catalogSearch && (
+                  <button className="clear-search-btn" onClick={() => setCatalogSearch('')} title={vi ? 'Xóa tìm kiếm' : 'Clear search'}>
+                    ✕
+                  </button>
+                )}
+              </div>
+
+              <div className="catalog-batch-actions">
+                <button
+                  className="batch-action-btn enable-all"
+                  onClick={enableAll}
+                  disabled={spinning}
+                  title={vi ? 'Kích hoạt lại toàn bộ món ăn' : 'Enable all dishes'}
+                >
+                  <CheckCheck size={15} />
+                  <span>{vi ? 'Bật tất cả' : 'Enable All'}</span>
+                </button>
+                <button
+                  className="batch-action-btn disable-all"
+                  onClick={disableAll}
+                  disabled={spinning}
+                  title={vi ? 'Tắt toàn bộ để chỉ chọn món mình muốn' : 'Disable all to pick few'}
+                >
+                  <XCircle size={15} />
+                  <span>{vi ? 'Tắt tất cả' : 'Disable All'}</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="catalog-categories-bar">
+              {[
+                { id: 'all', label: vi ? 'Tất cả món' : 'All', count: allDishes.length },
+                { id: 'com', label: vi ? 'Cơm' : 'Rice' },
+                { id: 'bun', label: vi ? 'Bún / Phở / Mì' : 'Noodles & Soups' },
+                { id: 'banhmi', label: vi ? 'Bánh mì / Cuốn' : 'Banh Mi & Rolls' },
+                { id: 'lau', label: vi ? 'Lẩu / Nướng / Cháo' : 'Hotpot & Grill' },
+                { id: 'ngoai', label: vi ? 'Món Ngoại' : 'International' },
+                { id: 'chay', label: vi ? 'Món Chay' : 'Vegetarian' },
+                ...(preferences.profile.custom.length > 0
+                  ? [{ id: 'custom', label: vi ? 'Món tự thêm' : 'Custom', count: preferences.profile.custom.length }]
+                  : []),
+                ...(preferences.profile.disabled.length > 0
+                  ? [{ id: 'disabled', label: vi ? 'Đã tắt' : 'Disabled', count: preferences.profile.disabled.length }]
+                  : []),
+              ].map((cat) => (
+                <button
+                  key={cat.id}
+                  className={`cat-pill ${catalogCategory === cat.id ? 'is-active' : ''}`}
+                  onClick={() => setCatalogCategory(cat.id)}
+                >
+                  <span>{cat.label}</span>
+                  {cat.count !== undefined && <span className="cat-pill-count">{cat.count}</span>}
+                </button>
+              ))}
+            </div>
+
+            <div className="catalog-tip-banner">
+              <span className="tip-icon">💡</span>
+              <span>
+                {vi
+                  ? 'Mẹo: Bạn có thể nhấn trực tiếp vào bất kỳ thẻ món ăn nào bên dưới để BẬT hoặc TẮT món đó khỏi vòng quay!'
+                  : 'Tip: You can click directly on any food card below to turn it ON or OFF from the roulette!'}
+              </span>
+            </div>
+          </div>
+
+          <div className="inventory-grid">
+            {inventoryCards.length > 0 ? (
+              inventoryCards
+            ) : (
+              <div className="empty-catalog-msg">
+                <p>
+                  {vi
+                    ? 'Không tìm thấy món ăn nào phù hợp với từ khóa hoặc bộ lọc đã chọn.'
+                    : 'No dishes match your search or filter.'}
+                </p>
+                <button
+                  className="reset-filter-btn"
+                  onClick={() => {
+                    setCatalogSearch('');
+                    setCatalogCategory('all');
+                  }}
+                >
+                  {vi ? 'Xóa bộ lọc & hiện lại tất cả' : 'Reset filters'}
+                </button>
+              </div>
+            )}
+          </div>
         </section>
+          </>
+        )}
 
         <footer>
           <div className="footer-content">
