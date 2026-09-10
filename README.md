@@ -1,19 +1,18 @@
-# Trưa Nay Ăn Gì 🍜
+# Ăn Gì Cũng Được? 🍜
 
-CS-style lunch roulette — open a case, choose lunch.
+Vòng quay ẩm thực ngẫu nhiên giải cứu mỗi bữa ăn khi ai cũng bảo "Ăn gì cũng được" — bấm một phát là chốt món, cấm đổi ý!
 
-**Main website:** https://truanayangi.com (Cloudflare + GCP).  
-**GitHub Pages entry point:** https://truanayangi-com.github.io/truanayangi/ → https://truanayangi.com/
+Repository: https://github.com/chusaubanh/AnGiCungDuoc
 
-This repository was transferred from `nagisanzenin/truanayangi`, preserving its Git history and community. The current application is a static frontend with **no account, login, backend or production API dependency**. Preferences, custom dishes and browser-local spin totals use versioned cookies, not server storage. Clearing cookies resets them. The historical global community count belongs to the main website, not this local app.
+Ứng dụng chạy static frontend độc lập, lưu trữ dữ liệu cục bộ bằng cookie trên trình duyệt (**không cần tài khoản, đăng nhập, backend hay cloud database**).
 
-## Chạy local / Run locally
+## Chạy cục bộ / Run locally
 
 ```sh
-git clone https://github.com/truanayangi-com/truanayangi.git
-cd truanayangi
-pnpm install --frozen-lockfile
-pnpm start
+git clone https://github.com/chusaubanh/AnGiCungDuoc.git
+cd AnGiCungDuoc
+npm install
+npm run dev
 ```
 
 Mở **http://127.0.0.1:5173**. Nếu cổng đang bận, dùng `pnpm start --port 5188` rồi mở http://127.0.0.1:5188. Không cần `.env`, OAuth client, database, tài khoản cloud hay backend. Dùng Node.js 22.12+ và phiên bản pnpm ghi trong package.json.
