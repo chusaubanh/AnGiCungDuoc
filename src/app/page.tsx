@@ -1102,14 +1102,16 @@ export default function Home() {
           <div className="footer-content">
             <div className="footer-brand">
               <strong>Ăn Gì Cũng Được?</strong>
-              <span>· Phiên bản Local độc lập</span>
+              <span>· {language === 'vi' ? 'Dự án ẩm thực mã nguồn mở' : 'Open-source culinary picker'}</span>
             </div>
             <div className="footer-links">
               <a href={`${basePath}/privacy.html`}>{language === 'vi' ? 'Quyền riêng tư' : 'Privacy'}</a>
               <span>·</span>
               <a href={`${basePath}/terms.html`}>{language === 'vi' ? 'Điều khoản' : 'Terms'}</a>
               <span>·</span>
-              <span>{language === 'vi' ? 'Hiệu ứng âm thanh CS:GO SourceSounds' : 'SFX: CS:GO SourceSounds'}</span>
+              <a href="https://github.com/chusaubanh/AnGiCungDuoc" target="_blank" rel="noopener noreferrer">GitHub</a>
+              <span>·</span>
+              <span className="footer-privacy-note">{language === 'vi' ? '100% Cục bộ & Bảo mật' : '100% Local & Private'}</span>
             </div>
           </div>
         </footer>

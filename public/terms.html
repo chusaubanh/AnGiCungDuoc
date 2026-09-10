@@ -1,1 +1,237 @@
-<!doctype html><html lang="vi"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Thông tin · Ăn Gì Cũng Được?</title><h1>Ăn Gì Cũng Được? — bản cộng đồng</h1><p>Ứng dụng gợi ý món ăn để giải trí. Giá là tham khảo. Lượt mở là số cục bộ trên trình duyệt, không phải số người dùng hay tổng lượt toàn cầu.</p><p>Không có mua vật phẩm, tiền cược hoặc phần thưởng có giá trị tiền tệ.</p><p>Âm thanh tham khảo từ SourceSounds/csgo; tài sản của bên thứ ba giữ quyền của chủ sở hữu. Xem ATTRIBUTION.md trong repo.</p><a href="./">Quay lại</a></html>
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Điều Khoản Sử Dụng · Ăn Gì Cũng Được?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fcfbf9;
+      --card-bg: #ffffff;
+      --border: #e7e5e4;
+      --text: #1c1917;
+      --text-muted: #78716c;
+      --accent: #dc2626;
+      --accent-soft: rgba(220, 38, 38, 0.08);
+      --font: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0e0d0c;
+        --card-bg: #171513;
+        --border: #292524;
+        --text: #f5f5f4;
+        --text-muted: #a8a29e;
+        --accent: #ef4444;
+        --accent-soft: rgba(239, 68, 68, 0.12);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      padding: 32px 20px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .top-nav {
+      margin-bottom: 32px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    .back-link:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      transform: translateX(-2px);
+    }
+
+    header {
+      margin-bottom: 40px;
+    }
+
+    .brand-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .lead {
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.04);
+    }
+
+    .card h2 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card h2 .icon {
+      font-size: 20px;
+    }
+
+    .card p {
+      font-size: 14.5px;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .card ul {
+      margin-left: 20px;
+      margin-bottom: 12px;
+      font-size: 14.5px;
+    }
+
+    .card li {
+      margin-bottom: 6px;
+    }
+
+    .card li:last-child {
+      margin-bottom: 0;
+    }
+
+    .note-box {
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      padding: 14px 18px;
+      border-radius: 0 12px 12px 0;
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 14px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-nav">
+      <a href="./" class="back-link">← Quay lại Ăn Gì Cũng Được?</a>
+    </div>
+
+    <header>
+      <div class="brand-tag">🍜 Minh bạch & Mã nguồn mở</div>
+      <h1>Điều Khoản Sử Dụng</h1>
+      <p class="lead">Cập nhật lần cuối: Tháng 9, 2026. Vui lòng đọc kỹ các điều khoản trước khi sử dụng ứng dụng.</p>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2><span class="icon">🎯</span> 1. Mục đích ứng dụng</h2>
+        <p><strong>Ăn Gì Cũng Được?</strong> là công cụ tiện ích mã nguồn mở và hoàn toàn miễn phí, được tạo ra nhằm hỗ trợ người dùng đưa ra quyết định nhanh chóng, vui vẻ khi lựa chọn bữa ăn hàng ngày.</p>
+        <p>Ứng dụng không yêu cầu đăng ký tài khoản, không thu phí dịch vụ và phục vụ cho mục đích giải trí, kết nối bạn bè, đồng nghiệp.</p>
+      </section>
+
+      <section class="card">
+        <h2><span class="icon">🏷️</span> 2. Thông tin món ăn & Giá tham khảo</h2>
+        <p>Các dữ liệu hiển thị trên ứng dụng bao gồm:</p>
+        <ul>
+          <li><strong>Tên món & hình ảnh:</strong> Mang tính chất minh họa ẩm thực, giúp người dùng dễ dàng hình dung món ăn.</li>
+          <li><strong>Mức giá gợi ý:</strong> Là khoảng giá tham khảo phổ biến tại thị trường ẩm thực Việt Nam, không phản ánh chính xác 100% giá bán tại từng quán ăn, nhà hàng cụ thể.</li>
+          <li><strong>Định lượng calo:</strong> Ước lượng dinh dưỡng trung bình theo khẩu phần phổ thông nhằm hỗ trợ tham khảo.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2><span class="icon">🎲</span> 3. Cam kết phi cờ bạc & Không giao dịch tài chính</h2>
+        <p>Hiệu ứng con lăn roulette là giao diện mô phỏng ngẫu nhiên trực quan để tăng tính hồi hộp và tương tác giải trí khi chọn món.</p>
+        <div class="note-box">
+          Ứng dụng tuyệt đối <strong>KHÔNG</strong> có tính năng nạp tiền, rút tiền, đặt cược, phần thưởng tiền mặt hay bất kỳ hình thức giao dịch tài chính nào.
+        </div>
+      </section>
+
+      <section class="card">
+        <h2><span class="icon">📱</span> 4. Lưu trữ dữ liệu cục bộ (Local Storage)</h2>
+        <p>Toàn bộ thiết lập cá nhân của bạn (bao gồm danh sách món tùy chỉnh, danh sách món đã tạm tắt, số lượt mở, âm thanh và ngôn ngữ) được lưu trữ hoàn toàn trên trình duyệt thiết bị của bạn thông qua Cookie và Local Storage.</p>
+        <p>Ứng dụng không lưu trữ dữ liệu cá nhân của bạn trên bất kỳ máy chủ nào. Bạn có thể đặt lại dữ liệu này bất cứ lúc nào qua tính năng Đặt lại mặc định trong ứng dụng.</p>
+      </section>
+
+      <section class="card">
+        <h2><span class="icon">🌐</span> 5. Dịch vụ ngoài & Giới hạn trách nhiệm</h2>
+        <p>Khi bạn nhấp vào liên kết tìm quán trên Google Maps hoặc đặt món trên ứng dụng giao thức ăn (GrabFood), bạn sẽ được chuyển hướng sang các nền tảng của bên thứ ba tuân thủ điều khoản và chính sách riêng của họ.</p>
+        <p>Người dùng tự chịu trách nhiệm về lựa chọn ẩm thực thực tế, khẩu vị, cũng như các yếu tố dị ứng thực phẩm khi quyết định dùng bữa.</p>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2026 Ăn Gì Cũng Được? · Mã nguồn mở trên <a href="https://github.com/chusaubanh/AnGiCungDuoc" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+    </footer>
+  </div>
+</body>
+</html>

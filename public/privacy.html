@@ -1,1 +1,239 @@
-<!doctype html><html lang="vi"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Quyền riêng tư · Ăn Gì Cũng Được?</title><h1>Quyền riêng tư</h1><p>Bản cộng đồng không có đăng nhập, backend ứng dụng hoặc công cụ theo dõi. Lựa chọn món, ngôn ngữ, bộ lọc và số lượt mở được lưu bằng cookie trên trình duyệt, tối đa một năm. Xóa cookie sẽ xóa dữ liệu này. Dữ liệu không đồng bộ giữa thiết bị.</p><p>Cookie được gửi tới máy chủ phục vụ website theo cơ chế trình duyệt; nhà cung cấp hosting có thể lưu nhật ký truy cập. Không nhập dữ liệu nhạy cảm vào tên món. Các liên kết Google Maps, GrabFood và GitHub chỉ mở khi bạn bấm và có chính sách riêng.</p><p>Không chia sẻ tài khoản hoặc dữ liệu với website truanayangi.com.</p><a href="./">Quay lại</a></html>
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chính Sách Quyền Riêng Tư · Ăn Gì Cũng Được?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fcfbf9;
+      --card-bg: #ffffff;
+      --border: #e7e5e4;
+      --text: #1c1917;
+      --text-muted: #78716c;
+      --accent: #dc2626;
+      --accent-soft: rgba(220, 38, 38, 0.08);
+      --font: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0e0d0c;
+        --card-bg: #171513;
+        --border: #292524;
+        --text: #f5f5f4;
+        --text-muted: #a8a29e;
+        --accent: #ef4444;
+        --accent-soft: rgba(239, 68, 68, 0.12);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      padding: 32px 20px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .top-nav {
+      margin-bottom: 32px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    .back-link:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      transform: translateX(-2px);
+    }
+
+    header {
+      margin-bottom: 40px;
+    }
+
+    .brand-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .lead {
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.04);
+    }
+
+    .card h2 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card h2 .icon {
+      font-size: 20px;
+    }
+
+    .card p {
+      font-size: 14.5px;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .card ul {
+      margin-left: 20px;
+      margin-bottom: 12px;
+      font-size: 14.5px;
+    }
+
+    .card li {
+      margin-bottom: 6px;
+    }
+
+    .card li:last-child {
+      margin-bottom: 0;
+    }
+
+    .highlight-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-nav">
+      <a href="./" class="back-link">← Quay lại Ăn Gì Cũng Được?</a>
+    </div>
+
+    <header>
+      <div class="brand-tag">🔒 Quyền Riêng Tư Là Ưu Tiên Hàng Đầu</div>
+      <h1>Chính Sách Quyền Riêng Tư</h1>
+      <p class="lead">Cam kết bảo mật 100% cục bộ trên thiết bị của bạn. Không theo dõi, không quảng cáo bám đuôi, không lưu trữ dữ liệu trên máy chủ.</p>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2><span class="icon">🛡️</span> 1. Triết lý Local-First: Quyền riêng tư tuyệt đối</h2>
+        <p><strong>Ăn Gì Cũng Được?</strong> được thiết kế theo nguyên tắc <span class="highlight-badge">Local-First</span>. Ứng dụng hoạt động độc lập ngay trên trình duyệt của bạn mà không kết nối tới bất kỳ máy chủ cơ sở dữ liệu nào để lưu trữ thông tin cá nhân.</p>
+        <p>Chúng tôi không thu thập họ tên, email, số điện thoại, vị trí địa lý hay bất kỳ dữ liệu định danh cá nhân nào của bạn.</p>
+      </section>
+
+      <section class="card">
+        <h2><span class="icon">🍪</span> 2. Dữ liệu lưu trữ trên trình duyệt</h2>
+        <p>Để ghi nhớ trải nghiệm và sở thích của bạn giữa các lần mở ứng dụng, website sử dụng cơ chế Cookie và Local Storage cục bộ trên máy của bạn để lưu:</p>
+        <ul>
+          <li><strong>Danh sách món ăn tùy chỉnh:</strong> Các món bạn tự thêm hoặc sửa tên, giá tiền.</li>
+          <li><strong>Món đã tạm ẩn:</strong> Những món bạn bỏ chọn để không xuất hiện trong vòng quay.</li>
+          <li><strong>Cài đặt giao diện & âm thanh:</strong> Ngôn ngữ (Tiếng Việt / English), bật/tắt tiếng, bộ lọc món.</li>
+          <li><strong>Số lượt quay:</strong> Đếm số lần bạn đã chọn món trên thiết bị này.</li>
+        </ul>
+        <p>Dữ liệu này chỉ tồn tại trên thiết bị hiện tại của bạn và không được đồng bộ hóa sang bất kỳ hệ thống nào khác.</p>
+      </section>
+
+      <section class="card">
+        <h2><span class="icon">🚫</span> 3. Không chia sẻ dữ liệu cho bên thứ ba</h2>
+        <p>Chúng tôi không bán, không phân phối và không chia sẻ bất kỳ dữ liệu sử dụng nào của bạn cho bất kỳ đối tác thương mại hoặc mạng lưới quảng cáo nào.</p>
+        <p>Trang web không tích hợp mã theo dõi hành vi người dùng (như Facebook Pixel hay các tracker theo dõi chéo bên ngoài).</p>
+      </section>
+
+      <section class="card">
+        <h2><span class="icon">🔗</span> 4. Liên kết đến dịch vụ bên ngoài</h2>
+        <p>Khi bạn sử dụng nút tiện ích tìm kiếm quán ăn trên Google Maps hoặc đặt món qua GrabFood, liên kết sẽ được mở sang ứng dụng hoặc website của các nhà cung cấp tương ứng. Việc sử dụng các dịch vụ đó sẽ chịu sự điều chỉnh của chính sách quyền riêng tư từ chính các đơn vị này.</p>
+      </section>
+
+      <section class="card">
+        <h2><span class="icon">🧹</span> 5. Quyền kiểm soát & Xóa dữ liệu</h2>
+        <p>Bạn luôn nắm giữ toàn quyền kiểm soát dữ liệu của mình:</p>
+        <ul>
+          <li>Bạn có thể bấm nút <strong>"Đặt lại mặc định"</strong> trong ứng dụng để khôi phục danh sách món ban đầu.</li>
+          <li>Bạn có thể xóa Cookie và bộ nhớ đệm (Cache) của trình duyệt bất cứ lúc nào để xóa sạch mọi dữ liệu cục bộ đã lưu.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2026 Ăn Gì Cũng Được? · Mã nguồn mở trên <a href="https://github.com/chusaubanh/AnGiCungDuoc" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+    </footer>
+  </div>
+</body>
+</html>
