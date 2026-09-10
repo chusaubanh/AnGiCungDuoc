@@ -14,15 +14,69 @@ import {
   RotateCcw, 
   Clock, 
   Zap, 
-  Smile, 
   SlidersHorizontal,
-  ChevronRight
+  ChevronRight,
+  MessageCircle
 } from 'lucide-react';
-import type { Language } from '@/lib/i18n';
+import { foods, type Food } from '@/lib/foods';
+import { foodName, priceLabel, type Language } from '@/lib/i18n';
 
 interface LandingPageProps {
   language: Language;
   onStartSpinning: () => void;
+}
+
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
+// Sample preview foods for the live culinary ribbon (taste-skill authentic visual asset)
+const showcaseDishes = [
+  foods[0], // Cơm tấm
+  foods[1], // Phở bò
+  foods[2], // Bánh mì
+  foods[3], // Bún chả
+  foods[4], // Sushi cá hồi
+  foods[6], // Bún bò Huế
+  foods[9], // Bánh xèo
+  foods[12], // Mì Quảng
+];
+
+function MiniFoodPlate({ food, language }: { food: Food; language: Language }) {
+  const common = food.image >= 120;
+  const lunch = food.image >= 72 && !common;
+  const expanded = food.image >= 36;
+  const index = common
+    ? (food.image - 120) % 12
+    : lunch
+    ? (food.image - 72) % 12
+    : expanded
+    ? (food.image - 36) % 12
+    : food.image % 4;
+  const atlas = common
+    ? `food-common-${Math.floor((food.image - 120) / 12)}`
+    : lunch
+    ? `food-lunch-${Math.floor((food.image - 72) / 12)}`
+    : expanded
+    ? `food-expanded-${Math.floor((food.image - 36) / 12)}`
+    : `food-hd-${Math.floor(food.image / 4)}`;
+
+  return (
+    <div className="mini-dish-card">
+      <div
+        className="mini-dish-thumb"
+        style={{
+          backgroundImage: `url(${basePath}/${atlas}.webp)`,
+          backgroundSize: expanded ? '400% 300%' : '200% 200%',
+          backgroundPosition: expanded
+            ? `${(index % 4) / 3 * 100}% ${(common ? [0, 50, 100] : [0, 46, 92])[Math.floor(index / 4)]}%`
+            : `${(index % 2) * 100}% ${Math.floor(index / 2) * 100}%`,
+        }}
+      />
+      <div className="mini-dish-meta">
+        <strong>{foodName(food, language)}</strong>
+        <span>{priceLabel(food.price, language, true)}</span>
+      </div>
+    </div>
+  );
 }
 
 export function LandingPage({ language, onStartSpinning }: LandingPageProps) {
@@ -30,17 +84,17 @@ export function LandingPage({ language, onStartSpinning }: LandingPageProps) {
 
   return (
     <div className="landing-container">
-      {/* 1. Hero Section */}
+      {/* 1. Hero Section (Fits Viewport, Tight Copy, Zero Slop) */}
       <section className="landing-hero">
         <div className="hero-badge">
-          <Sparkles size={16} className="hero-badge-icon" />
+          <Sparkles size={15} className="hero-badge-icon" />
           <span>{vi ? 'GIẢI PHÁP ĐỘC QUYỀN CHO VẤN NẠN THẾ KỶ' : 'THE ULTIMATE MEAL DECISION MAKER'}</span>
         </div>
 
         <h1 className="hero-title">
           {vi ? (
             <>
-              Khi người yêu hay bạn bè bảo: <br />
+              Khi ai cũng bảo: <br />
               <span className="hero-title-highlight">"ĂN GÌ CŨNG ĐƯỢC?"</span>
             </>
           ) : (
@@ -53,14 +107,14 @@ export function LandingPage({ language, onStartSpinning }: LandingPageProps) {
 
         <p className="hero-subtitle">
           {vi
-            ? 'Chính mình còn chưa biết thèm món gì, hỏi người khác thì toàn kêu "Sao cũng được" nhưng gợi ý món nào cũng chê! Đừng để cơn đói biến thành đau đầu — bấm quay một phát, thuật toán ẩm thực chốt hạ món ngon ngay lập tức, cấm đổi ý!'
-            : 'You don\'t know what to crave, and everyone answers "Anything" but rejects every suggestion! One spin and your meal is settled by delicious fate — fair, fast, and no take-backs!'}
+            ? 'Chính mình không biết thèm món gì, hỏi người khác thì bảo "sao cũng được" nhưng gợi ý món nào cũng chê! Bấm quay một phát chốt hạ bữa ăn, cấm đổi ý.'
+            : 'You don\'t know what to crave, and everyone answers "Anything" but rejects every idea! One spin settles the meal instantly, no take-backs.'}
         </p>
 
         <div className="hero-actions">
           <button className="hero-cta-btn primary" onClick={onStartSpinning}>
-            <Sparkles size={20} />
-            <span>{vi ? 'VÀO QUAY CHỌN MÓN NGAY' : 'SPIN FOR FOOD NOW'}</span>
+            <Sparkles size={19} />
+            <span>{vi ? 'BẮT ĐẦU QUAY CHỌN MÓN' : 'SPIN FOR FOOD NOW'}</span>
             <ArrowRight size={18} />
           </button>
           <a href="#how-it-works" className="hero-cta-btn secondary">
@@ -68,155 +122,216 @@ export function LandingPage({ language, onStartSpinning }: LandingPageProps) {
           </a>
         </div>
 
+        {/* Real Food Conveyor Ribbon: Tangible, Mouth-Watering Visual */}
+        <div className="hero-food-marquee-wrap" aria-label="Các món ăn nổi bật">
+          <div className="hero-food-marquee-track">
+            {showcaseDishes.concat(showcaseDishes).map((f, i) => (
+              <MiniFoodPlate key={`${f.name}-${i}`} food={f} language={language} />
+            ))}
+          </div>
+        </div>
+
         <div className="hero-trust-row">
           <span className="trust-item">
-            <CheckCircle2 size={16} className="trust-icon" />
-            {vi ? '100% Miễn phí & Không quảng cáo' : '100% Free & No Ads'}
+            <CheckCircle2 size={15} className="trust-icon" />
+            {vi ? '100% Miễn phí và không quảng cáo' : '100% Free & No Ads'}
           </span>
-          <span className="trust-dot">•</span>
           <span className="trust-item">
-            <ShieldCheck size={16} className="trust-icon" />
-            {vi ? 'Không cần đăng ký tài khoản' : 'No Account or Login'}
+            <ShieldCheck size={15} className="trust-icon" />
+            {vi ? 'Không cần đăng ký tài khoản' : 'No Account Needed'}
           </span>
-          <span className="trust-dot">•</span>
           <span className="trust-item">
-            <Zap size={16} className="trust-icon" />
+            <Zap size={15} className="trust-icon" />
             {vi ? 'Chốt món trong 5 giây' : 'Decide in 5 Seconds'}
           </span>
         </div>
       </section>
 
-      {/* 2. Relatable Pain Point Scenarios */}
+      {/* 2. Relatable Pain Point Scenarios (Asymmetric Bento Storyboard, No 3-Equal-Cards Slop) */}
       <section className="landing-scenarios">
         <div className="section-intro text-center">
           <span className="section-tag">{vi ? 'TÌNH HUỐNG THỰC TẾ' : 'RELATABLE MOMENTS'}</span>
           <h2>{vi ? 'Có Phải Bạn Từng Rơi Vào Cảnh Này?' : 'Sounds Familiar?'}</h2>
-          <p>{vi ? 'Những cuộc đối thoại bế tắc mỗi trưa mà ai trong chúng ta cũng từng trải qua' : 'The classic everyday lunch struggles we all experience'}</p>
+          <p>{vi ? 'Những cuộc đối thoại bế tắc mỗi ngày mà ai trong chúng ta cũng từng trải qua' : 'The classic mealtime dilemmas we all experience every single day'}</p>
         </div>
 
-        <div className="scenarios-grid">
-          <div className="scenario-card">
-            <div className="scenario-icon-wrap rose">
-              <Heart size={24} />
+        <div className="scenarios-bento">
+          {/* Main Story Bento Tile (Span 2) */}
+          <div className="bento-tile bento-story-main">
+            <div className="bento-tile-header">
+              <div className="scenario-icon-wrap rose">
+                <Heart size={22} />
+              </div>
+              <div>
+                <h3>{vi ? 'Đi ăn cùng Người Yêu' : 'Dining with Your Partner'}</h3>
+                <span className="bento-subtitle">{vi ? 'Cuộc đối thoại kinh điển muôn thuở' : 'The classic endless loop'}</span>
+              </div>
             </div>
-            <h3>{vi ? 'Đi ăn cùng Người Yêu' : 'Dining with Your Partner'}</h3>
-            <p className="scenario-quote">
-              {vi 
-                ? '— "Hôm nay em muốn ăn gì?"\n— "Ăn gì cũng được anh!"\n— "Ăn bún bò nhé?"\n— "Thôi béo lắm!"\n— "Vậy cơm tấm?"\n— "Khô cổ họng lắm!"'
-                : '— "What do you want to eat today?"\n— "Anything is fine!"\n— "Burgers?"\n— "Too greasy!"\n— "Salad?"\n— "Too boring!"'}
-            </p>
-            <div className="scenario-footer">
-              <span className="scenario-tag-fix">{vi ? '💡 Giải pháp: Bấm quay, máy chọn là phải ăn!' : '💡 Fix: Let the wheel decide, no excuses!'}</span>
+
+            {/* Chat Bubble Simulation (Tangible, Fun, No Em-Dash) */}
+            <div className="chat-dialog-preview">
+              <div className="chat-bubble user-a">
+                <span className="chat-sender">{vi ? 'Bạn' : 'You'}:</span>
+                <span className="chat-text">{vi ? 'Hôm nay mình ăn gì em nhỉ?' : 'What do you want to eat today?'}</span>
+              </div>
+              <div className="chat-bubble user-b">
+                <span className="chat-sender">{vi ? 'Người yêu' : 'Partner'}:</span>
+                <span className="chat-text">{vi ? 'Em ăn gì cũng được á!' : 'Anything is fine with me!'}</span>
+              </div>
+              <div className="chat-bubble user-a">
+                <span className="chat-sender">{vi ? 'Bạn' : 'You'}:</span>
+                <span className="chat-text">{vi ? 'Ăn phở bò tái nạm nhé?' : 'How about beef noodles?'}</span>
+              </div>
+              <div className="chat-bubble user-b">
+                <span className="chat-sender">{vi ? 'Người yêu' : 'Partner'}:</span>
+                <span className="chat-text">{vi ? 'Thôi, nước béo ngấy lắm...' : 'Nah, too greasy...'}</span>
+              </div>
+              <div className="chat-bubble user-a">
+                <span className="chat-sender">{vi ? 'Bạn' : 'You'}:</span>
+                <span className="chat-text">{vi ? 'Vậy ăn cơm tấm sườn nướng?' : 'What about grilled pork rice?'}</span>
+              </div>
+              <div className="chat-bubble user-b">
+                <span className="chat-sender">{vi ? 'Người yêu' : 'Partner'}:</span>
+                <span className="chat-text">{vi ? 'Khô cổ họng lắm anh ơi!' : 'Too dry, don\'t want that either!'}</span>
+              </div>
+            </div>
+
+            <div className="bento-tile-footer">
+              <span className="bento-pill-solution">{vi ? '💡 Giải pháp: Bấm quay, máy chọn là phải ăn!' : '💡 Fix: Let the wheel decide, no excuses!'}</span>
             </div>
           </div>
 
-          <div className="scenario-card">
+          {/* Bento Tile 2: Office Group */}
+          <div className="bento-tile bento-story-sub">
             <div className="scenario-icon-wrap amber">
-              <Users size={24} />
+              <Users size={22} />
             </div>
             <h3>{vi ? 'Nhóm Bạn & Đồng Nghiệp' : 'Friends & Office Group'}</h3>
-            <p className="scenario-quote">
+            <div className="hunger-timer-badge">
+              <Clock size={15} />
+              <span>{vi ? '45 phút lướt app vẫn đói' : '45 min scrolling, still hungry'}</span>
+            </div>
+            <p className="scenario-desc">
               {vi
-                ? 'Hỏi: "Bữa nay ăn gì cả nhà ơi?". Cả nhóm nhìn nhau đói mốc meo, lướt app đồ ăn mòn ngón tay 45 phút vẫn chưa ai chịu chốt được quán.'
+                ? 'Hỏi: "Bữa nay ăn gì cả nhà ơi?". Cả nhóm nhìn nhau đói mốc meo, lướt app đồ ăn mòn ngón tay vẫn chưa ai chịu chốt.'
                 : 'Asking "What should we eat?". Everyone looks at each other starving, scrolling food delivery apps for 45 minutes still undecided.'}
             </p>
-            <div className="scenario-footer">
-              <span className="scenario-tag-fix">{vi ? '💡 Giải pháp: Chiếu màn hình, quay 1 phát ăn ngay!' : '💡 Fix: Cast to screen, spin once, done!'}</span>
+            <div className="bento-tile-footer">
+              <span className="bento-pill-solution">{vi ? '💡 Chiếu màn hình, quay 1 phát ăn ngay!' : '💡 Cast to screen, spin once, done!'}</span>
             </div>
           </div>
 
-          <div className="scenario-card">
+          {/* Bento Tile 3: Solo Crisis */}
+          <div className="bento-tile bento-story-sub">
             <div className="scenario-icon-wrap emerald">
-              <HelpCircle size={24} />
+              <HelpCircle size={22} />
             </div>
             <h3>{vi ? 'Một Mình Tự Hỏi Lòng' : 'Solo Dining Crisis'}</h3>
-            <p className="scenario-quote">
+            <div className="hunger-timer-badge">
+              <Flame size={15} />
+              <span>{vi ? 'Bụng đói nhưng đầu rỗng tuếch' : 'Starving with a blank mind'}</span>
+            </div>
+            <p className="scenario-desc">
               {vi
-                ? 'Bụng đói nhưng đầu rỗng tuếch không biết thèm món gì. Lướt qua 100 quán trên Grab, ShopeeFood, cho vào giỏ rồi xóa ra, cuối cùng đành pha mì gói.'
-                : 'Hungry but brain is completely blank. Scrolling through 100 restaurants, adding and removing items, ending up eating instant noodles.'}
+                ? 'Lướt 100 quán Grab, ShopeeFood, cho vào giỏ rồi xóa ra, cuối cùng lại ăn mì gói. Vòng quay giúp bạn chốt món ngon thật sự.'
+                : 'Scrolling through 100 restaurants, adding and removing items, ending up eating instant noodles. The wheel solves it!'}
             </p>
-            <div className="scenario-footer">
-              <span className="scenario-tag-fix">{vi ? '💡 Giải pháp: Đặt mức giá, quay phát chốt luôn!' : '💡 Fix: Set budget, spin, order immediately!'}</span>
+            <div className="bento-tile-footer">
+              <span className="bento-pill-solution">{vi ? '💡 Đặt mức giá, quay phát chốt luôn!' : '💡 Set budget, spin, order right away!'}</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Features Showcase */}
+      {/* 3. Features Bento (Asymmetric Grid with Real Culinary Physics) */}
       <section className="landing-features">
         <div className="section-intro text-center">
-          <span className="section-tag">{vi ? 'TÍNH NĂNG VƯỢT TRỘI' : 'FEATURE HIGHLIGHTS'}</span>
-          <h2>{vi ? 'Vũ Khí Bí Mật Của Mỗi Bữa Trưa' : 'Everything You Need for Lunch'}</h2>
-          <p>{vi ? 'Đơn giản, mượt mà và thực sự giải quyết được vấn đề chọn món' : 'Simple, fast and genuinely useful'}</p>
+          <span className="section-tag">{vi ? 'TÍNH NĂNG ĐỘC BẢN' : 'EXCLUSIVE FEATURES'}</span>
+          <h2>{vi ? 'Vũ Khí Bí Mật Cho Mọi Bữa Ăn' : 'The Secret Weapon for Every Meal'}</h2>
+          <p>{vi ? 'Thiết kế thông minh, cơ học cuộn mượt mà và thực sự giải quyết vấn đề' : 'Smart, tactile and genuinely solves the meal dilemma'}</p>
         </div>
 
-        <div className="features-grid">
-          <div className="feature-item">
-            <div className="feature-icon red">
-              <RotateCcw size={26} />
+        <div className="features-bento">
+          {/* Bento Hero Feature (2 cols) */}
+          <div className="bento-feat-card span-2">
+            <div className="bento-feat-content">
+              <div className="feature-icon red">
+                <RotateCcw size={24} />
+              </div>
+              <h4>{vi ? 'Vòng Quay Roulette Cuộn Ngang Cơ Học' : 'Horizontal Roulette Rolling Mechanics'}</h4>
+              <p>{vi ? 'Chuyển động cuộn mượt mà với âm thanh kịch tính, kim định vị laser vàng và tỷ lệ xác suất hoàn toàn công bằng.' : 'Smooth rolling physics with authentic sound effects and balanced probabilities.'}</p>
             </div>
-            <h4>{vi ? 'Vòng Quay Roulette Cuộn Ngang' : 'Horizontal Roulette Rolling'}</h4>
-            <p>{vi ? 'Mở món kịch tính với âm thanh sinh động, kim định vị laser và tỷ lệ xác suất hoàn toàn công bằng.' : 'Exciting rolling mechanics with authentic sounds and balanced probabilities.'}</p>
+            <div className="bento-roulette-mini-visual" aria-hidden="true">
+              <div className="mini-laser-marker" />
+              <div className="mini-reel-strip">
+                <span className="mini-strip-chip active">Phở Bò</span>
+                <span className="mini-strip-chip">Cơm Tấm</span>
+                <span className="mini-strip-chip">Bún Chả</span>
+                <span className="mini-strip-chip">Bánh Mì</span>
+              </div>
+            </div>
           </div>
 
-          <div className="feature-item">
+          {/* Bento Tile 2: Smart Budget */}
+          <div className="bento-feat-card">
             <div className="feature-icon amber">
-              <SlidersHorizontal size={26} />
+              <SlidersHorizontal size={24} />
             </div>
             <h4>{vi ? 'Cân Bằng Ngân Sách Thông Minh' : 'Budget-Balanced Algorithm'}</h4>
-            <p>{vi ? 'Chọn mức giá mong muốn (35k - 150k hoặc tự chỉnh). Hệ thống sẽ tự tính toán để mức chi trung bình luôn chuẩn ví tiền.' : 'Pick your budget (35k - 150k). The algorithm ensures expected meal cost stays on target.'}</p>
+            <p>{vi ? 'Chọn mức giá mong muốn (35k - 150k). Thuật toán tự cân bằng xác suất để mức chi luôn chuẩn ví tiền.' : 'Pick your budget (35k - 150k). The algorithm ensures expected meal cost stays on target.'}</p>
+            <div className="mini-budget-chips">
+              <span className="budget-tag">35k</span>
+              <span className="budget-tag highlight">50k</span>
+              <span className="budget-tag">75k</span>
+              <span className="budget-tag">100k+</span>
+            </div>
           </div>
 
-          <div className="feature-item">
+          {/* Bento Tile 3: 130+ Dishes */}
+          <div className="bento-feat-card">
             <div className="feature-icon emerald">
-              <Utensils size={26} />
+              <Utensils size={24} />
             </div>
-            <h4>{vi ? 'Hơn 130+ Món Ngon Sáng, Trưa & Tối' : '130+ Dishes for Breakfast, Lunch & Dinner'}</h4>
-            <p>{vi ? 'Từ món bình dân quen thuộc (Cơm Tấm, Phở, Bánh Mì, Bún Chả) đến ẩm thực Nhật, Hàn, Thái và món Âu sang trọng.' : 'Comprehensive culinary catalog from traditional street food to gourmet specialties.'}</p>
+            <h4>{vi ? '130+ Món Ngon Đa Dạng' : '130+ Diverse Specialties'}</h4>
+            <p>{vi ? 'Đầy đủ từ món bình dân đường phố Việt Nam đến ẩm thực Á - Âu thượng hạng cho cả ngày.' : 'From traditional Vietnamese street eats to international gourmet specialties.'}</p>
           </div>
 
-          <div className="feature-item">
+          {/* Bento Tile 4: 1-Click Toggle */}
+          <div className="bento-feat-card">
             <div className="feature-icon blue">
-              <Zap size={26} />
+              <Zap size={24} />
             </div>
-            <h4>{vi ? 'Bật / Tắt & Thêm Món Trong 1 Click' : '1-Click Dish Toggle & Custom Foods'}</h4>
-            <p>{vi ? 'Dễ dàng loại bỏ món bạn không thích bằng cách bấm thẳng vào thẻ món, hoặc thêm quán quen ruột vào danh sách.' : 'Toggle unwanted dishes with one click or add your favorite local stalls effortlessly.'}</p>
+            <h4>{vi ? 'Bật / Tắt & Thêm Món 1 Chạm' : '1-Click Dish Toggle & Custom Foods'}</h4>
+            <p>{vi ? 'Nhấn trực tiếp lên thẻ món để bật hoặc loại trừ món không thích, hoặc thêm quán quen ruột vào vòng quay.' : 'Toggle unwanted dishes with one click or add your local favorites to the wheel.'}</p>
           </div>
 
-          <div className="feature-item">
+          {/* Bento Tile 5: Maps & GrabFood */}
+          <div className="bento-feat-card">
             <div className="feature-icon green">
-              <ShoppingBag size={26} />
+              <ShoppingBag size={24} />
             </div>
-            <h4>{vi ? 'Mở GrabFood & Tìm Quán Tức Thì' : 'GrabFood & Maps 1-Tap Links'}</h4>
-            <p>{vi ? 'Sau khi quay trúng món, chỉ cần bấm nút để mở ngay Google Maps tìm quán gần bạn hoặc đặt món giao tận nơi qua GrabFood.' : 'Instantly find nearby restaurants on Google Maps or place an order on GrabFood.'}</p>
-          </div>
-
-          <div className="feature-item">
-            <div className="feature-icon purple">
-              <ShieldCheck size={26} />
-            </div>
-            <h4>{vi ? 'Bảo Mật Local-First 100%' : '100% Local & Privacy-First'}</h4>
-            <p>{vi ? 'Không lưu dữ liệu lên server, không cần đăng nhập. Toàn bộ thiết lập của bạn được lưu an toàn trên chính trình duyệt này.' : 'No account, no tracking. All your preferences and custom dishes stay in your local browser.'}</p>
+            <h4>{vi ? 'Mở Google Maps & GrabFood' : 'Instant Maps & GrabFood Links'}</h4>
+            <p>{vi ? 'Quay trúng món, bấm một nút để mở ngay Google Maps tìm quán gần nhất hoặc gọi món qua GrabFood.' : 'Instantly find nearby restaurants on Google Maps or order on GrabFood with 1 tap.'}</p>
           </div>
         </div>
       </section>
 
-      {/* 4. How it works (3 simple steps) */}
+      {/* 4. The 3-Step Protocol */}
       <section id="how-it-works" className="landing-steps">
         <div className="section-intro text-center">
-          <span className="section-tag">{vi ? 'DỄ NHƯ ĂN KẸO' : 'HOW IT WORKS'}</span>
-          <h2>{vi ? '3 Bước Chấm Dứt Nạn "Ăn Gì Cũng Được"' : '3 Steps to End Lunch Indecision'}</h2>
+          <span className="section-tag">{vi ? 'QUY TRÌNH 3 BƯỚC' : 'THE 3-STEP PROTOCOL'}</span>
+          <h2>{vi ? 'Chấm Dứt Nạn Phân Vân Chỉ Trong 5 Giây' : 'End Meal Indecision in 5 Seconds'}</h2>
         </div>
 
         <div className="steps-row">
           <div className="step-box">
             <div className="step-num">01</div>
-            <h4>{vi ? 'Chọn mức chi' : 'Set your budget'}</h4>
-            <p>{vi ? 'Gạt chọn mức tiền (35k, 50k, 75k, 100k...) hoặc bật chế độ ăn chay nếu muốn.' : 'Pick your budget (35k, 50k, 75k...) or toggle vegetarian.'}</p>
+            <h4>{vi ? 'Chọn mức chi & khẩu vị' : 'Set your budget'}</h4>
+            <p>{vi ? 'Gạt chọn mức tiền mong muốn hoặc bật chế độ ăn chay nếu muốn.' : 'Pick your budget (35k, 50k, 75k...) or toggle vegetarian.'}</p>
           </div>
 
           <div className="step-arrow">
-            <ChevronRight size={28} />
+            <ChevronRight size={26} />
           </div>
 
           <div className="step-box highlight">
@@ -226,30 +341,30 @@ export function LandingPage({ language, onStartSpinning }: LandingPageProps) {
           </div>
 
           <div className="step-arrow">
-            <ChevronRight size={28} />
+            <ChevronRight size={26} />
           </div>
 
           <div className="step-box">
             <div className="step-num">03</div>
-            <h4>{vi ? 'Chốt đơn đi ăn!' : 'Enjoy your meal'}</h4>
-            <p>{vi ? 'Món ngon đã chọn, bấm tìm quán hoặc gọi GrabFood giao đến. Cấm đổi ý!' : 'Winner revealed! Find nearby or order delivery. No take-backs!'}</p>
+            <h4>{vi ? 'Chốt đơn đi ăn - Cấm đổi ý!' : 'Eat & Enjoy - No Take-backs!'}</h4>
+            <p>{vi ? 'Món ngon đã chọn, bấm tìm quán gần hoặc gọi GrabFood giao tận nơi.' : 'Winner revealed! Find nearby or order delivery. No take-backs!'}</p>
           </div>
         </div>
 
         <div className="text-center steps-cta-wrap">
           <button className="hero-cta-btn primary" onClick={onStartSpinning}>
-            <Sparkles size={20} />
+            <Sparkles size={19} />
             <span>{vi ? 'THỬ NGAY BÂY GIỜ' : 'TRY IT RIGHT NOW'}</span>
             <ArrowRight size={18} />
           </button>
         </div>
       </section>
 
-      {/* 5. User Quotes / Social Proof */}
+      {/* 5. Editorial User Stories (Zero Em-Dash, Authentic Quotes) */}
       <section className="landing-testimonials">
         <div className="section-intro text-center">
-          <span className="section-tag">{vi ? 'NGƯỜI TRONG CUỘC LÊN TIẾNG' : 'USER STORIES'}</span>
-          <h2>{vi ? 'Những "Nạn Nhân" Đã Được Cứu Rỗi' : 'Real Stories from the Hungry'}</h2>
+          <span className="section-tag">{vi ? 'TRẢI NGHIỆM THỰC TẾ' : 'COMMUNITY STORIES'}</span>
+          <h2>{vi ? 'Những "Nạn Nhân" Đã Được Cứu Rỗi' : 'Real Stories from Hungry Souls'}</h2>
         </div>
 
         <div className="testimonials-grid">
@@ -257,14 +372,14 @@ export function LandingPage({ language, onStartSpinning }: LandingPageProps) {
             <div className="testimonial-stars">★★★★★</div>
             <p className="testimonial-text">
               {vi
-                ? '"Từ ngày có vòng quay này, người yêu tôi hết lý do bảo "sao cũng được". Cứ mở app ra bấm quay, trúng món nào dắt đi ăn món đó, cuộc sống bình yên hẳn!"'
-                : '"My girlfriend no longer tortures me with "whatever you want". We spin the wheel, whatever it stops on, we eat. Absolute lifesaver!"'}
+                ? '"Từ ngày có vòng quay này, người yêu tôi hết lý do bảo sao cũng được. Cứ mở app ra bấm quay, trúng món nào dắt đi ăn món đó, cuộc sống bình yên hẳn!"'
+                : '"My girlfriend no longer tortures me with whatever you want. We spin the wheel, whatever it stops on, we eat. Absolute lifesaver!"'}
             </p>
             <div className="testimonial-author">
               <span className="author-avatar">🧑‍💻</span>
               <div>
                 <strong>{vi ? 'Tuấn Anh' : 'Tuan Anh'}</strong>
-                <span>{vi ? 'Software Engineer, Hà Nội' : 'Software Engineer'}</span>
+                <span>{vi ? 'Kỹ sư phần mềm, Hà Nội' : 'Software Engineer'}</span>
               </div>
             </div>
           </div>
@@ -303,7 +418,7 @@ export function LandingPage({ language, onStartSpinning }: LandingPageProps) {
         </div>
       </section>
 
-      {/* 6. Final Call to Action Banner */}
+      {/* 6. Atmospheric Charcoal Ceramic Final Call to Action */}
       <section className="landing-final-cta">
         <div className="final-cta-content">
           <div className="cta-icon-float">🍜</div>

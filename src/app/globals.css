@@ -2463,15 +2463,15 @@ footer {
 }
 
 /* ==========================================================================
-   Landing Page / App Showcase Styles
+   Taste-Skill Elevated Landing Page (Asymmetric Bento, Anti-Slop)
    ========================================================================== */
 .landing-container {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 24px 20px 80px;
+  padding: 16px 20px 80px;
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  gap: 72px;
 }
 
 .landing-hero {
@@ -2479,7 +2479,7 @@ footer {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 48px 16px 24px;
+  padding: 36px 16px 16px;
   position: relative;
 }
 
@@ -2492,10 +2492,10 @@ footer {
   background: #fef2f2;
   border: 1px solid #fee2e2;
   color: #dc2626;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 800;
   letter-spacing: 0.8px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   box-shadow: 0 2px 6px rgba(220, 38, 38, 0.06);
 }
 
@@ -2507,9 +2507,9 @@ footer {
   font-family: var(--font-display);
   font-size: clamp(32px, 5.2vw, 56px);
   font-weight: 900;
-  line-height: 1.18;
+  line-height: 1.16;
   color: var(--text-primary);
-  margin: 0 0 20px;
+  margin: 0 0 16px;
   letter-spacing: -0.8px;
 }
 
@@ -2522,11 +2522,11 @@ footer {
 }
 
 .hero-subtitle {
-  font-size: clamp(15px, 2vw, 18px);
+  font-size: clamp(15px, 2vw, 17.5px);
   line-height: 1.65;
   color: var(--text-secondary);
-  max-width: 680px;
-  margin: 0 0 36px;
+  max-width: 660px;
+  margin: 0 0 28px;
 }
 
 .hero-actions {
@@ -2535,7 +2535,7 @@ footer {
   gap: 14px;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .hero-cta-btn {
@@ -2549,8 +2549,12 @@ footer {
   font-weight: 800;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.hero-cta-btn:active {
+  transform: translateY(1px) scale(0.98);
 }
 
 .hero-cta-btn.primary {
@@ -2584,10 +2588,89 @@ footer {
   transform: translateY(-2px);
 }
 
+/* Taste-Skill Tangible Live Food Marquee Ticker in Hero */
+.hero-food-marquee-wrap {
+  width: 100%;
+  max-width: 860px;
+  overflow: hidden;
+  margin: 16px 0 24px;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.hero-food-marquee-track {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  animation: foodTapeScroll 30s linear infinite;
+}
+
+.hero-food-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes foodTapeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.mini-dish-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid var(--surface-border);
+  padding: 5px 14px 5px 6px;
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px rgba(160, 130, 90, 0.06);
+  white-space: nowrap;
+  user-select: none;
+  transition: transform 0.2s;
+}
+
+.mini-dish-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-red);
+}
+
+.mini-dish-thumb {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #f0ebe1;
+  background-color: #242220;
+  flex-shrink: 0;
+}
+
+.mini-dish-meta {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 1px;
+}
+
+.mini-dish-meta strong {
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.mini-dish-meta span {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--accent-red);
+}
+
 .hero-trust-row {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 20px;
   flex-wrap: wrap;
   justify-content: center;
   font-size: 13px;
@@ -2605,18 +2688,14 @@ footer {
   color: #16a34a;
 }
 
-.trust-dot {
-  color: #d6cfc4;
-}
-
-/* Section Headers */
+/* Section Intros */
 .section-intro {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 10px;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
 }
 
 .section-tag {
@@ -2645,35 +2724,149 @@ footer {
   max-width: 560px;
 }
 
-/* Scenarios Grid */
-.scenarios-grid {
+/* ==========================================================================
+   Section 2: Asymmetric Bento Storyboard (No 3-Equal-Cards Slop)
+   ========================================================================== */
+.scenarios-bento {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 20px;
 }
 
-.scenario-card {
+.bento-tile {
   background: #ffffff;
   border: 1px solid var(--surface-border);
   border-radius: var(--radius-xl);
-  padding: 28px 24px;
+  padding: 26px 24px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   box-shadow: 0 4px 20px rgba(160, 130, 90, 0.05);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
 }
 
-.scenario-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 32px rgba(160, 130, 90, 0.12);
+.bento-tile:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(160, 130, 90, 0.1);
   border-color: var(--surface-border-hover);
 }
 
-.scenario-icon-wrap {
-  width: 48px;
-  height: 48px;
+.bento-story-main {
+  grid-row: span 2;
+  background: linear-gradient(180deg, #ffffff 0%, #fdfbf7 100%);
+  border: 1.5px solid #f2ede4;
+}
+
+.bento-tile-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.bento-tile h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.bento-subtitle {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+/* Chat Dialog Preview Component */
+.chat-dialog-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--surface-2);
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--surface-border);
+  margin: 4px 0;
+}
+
+.chat-bubble {
+  max-width: 86%;
+  padding: 8px 14px;
   border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.chat-bubble.user-a {
+  align-self: flex-start;
+  background: #ffffff;
+  border: 1px solid var(--surface-border);
+  color: var(--text-primary);
+  border-bottom-left-radius: 4px;
+}
+
+.chat-bubble.user-b {
+  align-self: flex-end;
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
+  color: #991b1b;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-sender {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.75;
+}
+
+.bento-tile-footer {
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+.bento-pill-solution {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 9999px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.hunger-timer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  background: #fefce8;
+  border: 1px solid #fef08a;
+  color: #854d0e;
+  font-size: 12px;
+  font-weight: 700;
+  align-self: flex-start;
+}
+
+.scenario-desc {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.scenario-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   display: grid;
   place-items: center;
   flex-shrink: 0;
@@ -2694,51 +2887,20 @@ footer {
   color: #16a34a;
 }
 
-.scenario-card h3 {
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 800;
-  margin: 0;
-  color: var(--text-primary);
-}
-
-.scenario-quote {
-  font-size: 13.5px;
-  line-height: 1.6;
-  color: var(--text-secondary);
-  white-space: pre-line;
-  font-style: italic;
-  background: var(--surface-2);
-  padding: 14px;
-  border-radius: 12px;
-  border-left: 3px solid #e5e0d8;
-  margin: 0;
-}
-
-.scenario-footer {
-  margin-top: auto;
-  padding-top: 6px;
-}
-
-.scenario-tag-fix {
-  font-size: 12.5px;
-  font-weight: 700;
-  color: #15803d;
-  display: inline-block;
-}
-
-/* Features Grid */
-.features-grid {
+/* ==========================================================================
+   Section 3: Feature Bento (Asymmetric, Mechanical Aesthetics)
+   ========================================================================== */
+.features-bento {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
+  gap: 20px;
 }
 
-.feature-item {
+.bento-feat-card {
   background: #ffffff;
   border: 1px solid var(--surface-border);
   border-radius: var(--radius-xl);
-  padding: 28px 24px;
+  padding: 24px 20px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -2746,20 +2908,101 @@ footer {
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.feature-item:hover {
-  transform: translateY(-4px);
+.bento-feat-card:hover {
+  transform: translateY(-3px);
   box-shadow: 0 12px 28px rgba(160, 130, 90, 0.1);
   border-color: var(--surface-border-hover);
 }
 
+.bento-feat-card.span-2 {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: linear-gradient(135deg, #ffffff 0%, #fffbf7 100%);
+}
+
+.bento-feat-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bento-roulette-mini-visual {
+  position: relative;
+  background: #1c1917;
+  padding: 16px 20px;
+  border-radius: 14px;
+  border: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.mini-laser-marker {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid #facc15;
+  filter: drop-shadow(0 0 6px #facc15);
+}
+
+.mini-reel-strip {
+  display: flex;
+  gap: 6px;
+}
+
+.mini-strip-chip {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: #a1a1aa;
+  background: #27272a;
+}
+
+.mini-strip-chip.active {
+  background: #dc2626;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(220, 38, 38, 0.6);
+}
+
+.mini-budget-chips {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.budget-tag {
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 11.5px;
+  font-weight: 800;
+  background: var(--surface-2);
+  border: 1px solid var(--surface-border);
+  color: var(--text-secondary);
+}
+
+.budget-tag.highlight {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
 .feature-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .feature-icon.red {
@@ -2787,27 +3030,24 @@ footer {
   color: #059669;
 }
 
-.feature-icon.purple {
-  background: #f5f3ff;
-  color: #7c3aed;
-}
-
-.feature-item h4 {
+.bento-feat-card h4 {
   font-family: var(--font-display);
-  font-size: 17px;
+  font-size: 16.5px;
   font-weight: 800;
   margin: 0;
   color: var(--text-primary);
 }
 
-.feature-item p {
+.bento-feat-card p {
   font-size: 13.5px;
   line-height: 1.55;
   color: var(--text-secondary);
   margin: 0;
 }
 
-/* Steps Row */
+/* ==========================================================================
+   Section 4: Steps Row
+   ========================================================================== */
 .steps-row {
   display: flex;
   align-items: stretch;
@@ -2820,7 +3060,7 @@ footer {
   background: #ffffff;
   border: 1px solid var(--surface-border);
   border-radius: var(--radius-xl);
-  padding: 28px 24px;
+  padding: 26px 22px;
   position: relative;
   box-shadow: 0 4px 18px rgba(160, 130, 90, 0.04);
   display: flex;
@@ -2835,7 +3075,7 @@ footer {
 
 .step-num {
   font-family: var(--font-mono);
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 900;
   color: #e5e0d8;
   margin-bottom: 8px;
@@ -2848,7 +3088,7 @@ footer {
 
 .step-box h4 {
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 17.5px;
   font-weight: 800;
   margin: 0 0 8px;
   color: var(--text-primary);
@@ -2870,22 +3110,24 @@ footer {
 }
 
 .steps-cta-wrap {
-  margin-top: 36px;
+  margin-top: 32px;
   text-align: center;
 }
 
-/* Testimonials */
+/* ==========================================================================
+   Section 5: Editorial Testimonials (Zero Em-Dash)
+   ========================================================================== */
 .testimonials-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
+  gap: 20px;
 }
 
 .testimonial-card {
   background: #ffffff;
   border: 1px solid var(--surface-border);
   border-radius: var(--radius-xl);
-  padding: 28px 24px;
+  padding: 26px 22px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -2895,7 +3137,7 @@ footer {
 .testimonial-stars {
   color: #eab308;
   letter-spacing: 2px;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .testimonial-text {
@@ -2916,7 +3158,7 @@ footer {
 }
 
 .author-avatar {
-  font-size: 28px;
+  font-size: 26px;
   line-height: 1;
 }
 
@@ -2931,11 +3173,13 @@ footer {
   color: var(--text-muted);
 }
 
-/* Final CTA Banner */
+/* ==========================================================================
+   Section 6: Atmospheric Ceramic Final CTA
+   ========================================================================== */
 .landing-final-cta {
   background: linear-gradient(135deg, #1c1917 0%, #292524 100%);
   border-radius: var(--radius-xl);
-  padding: 60px 32px;
+  padding: 56px 32px;
   text-align: center;
   color: #ffffff;
   position: relative;
@@ -2950,7 +3194,7 @@ footer {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle at 50% 50%, rgba(220, 38, 38, 0.15), transparent 60%);
+  background: radial-gradient(circle at 50% 50%, rgba(220, 38, 38, 0.18), transparent 60%);
   pointer-events: none;
 }
 
@@ -3009,8 +3253,18 @@ footer {
     flex-wrap: wrap;
     gap: 10px;
   }
-  .scenarios-grid,
-  .features-grid,
+  .scenarios-bento {
+    grid-template-columns: 1fr;
+  }
+  .bento-story-main {
+    grid-row: span 1;
+  }
+  .features-bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .bento-feat-card.span-2 {
+    grid-column: span 2;
+  }
   .testimonials-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -3100,6 +3354,9 @@ footer {
     font-size: 14px;
     padding: 0 16px;
   }
+  .hero-food-marquee-wrap {
+    margin: 12px 0 18px;
+  }
   .hero-trust-row {
     font-size: 11.5px;
     gap: 6px 10px;
@@ -3113,14 +3370,19 @@ footer {
   .section-intro p {
     font-size: 13px;
   }
-  .scenarios-grid,
-  .features-grid,
+  .scenarios-bento,
+  .features-bento,
   .testimonials-grid {
     grid-template-columns: 1fr;
     gap: 14px;
   }
-  .scenario-card,
-  .feature-item,
+  .bento-feat-card.span-2 {
+    grid-column: span 1;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .bento-tile,
+  .bento-feat-card,
   .testimonial-card,
   .step-box {
     padding: 18px 14px;
