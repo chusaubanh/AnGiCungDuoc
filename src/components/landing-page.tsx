@@ -34,7 +34,7 @@ export function LandingPage({ language, onStartSpinning }: LandingPageProps) {
       <section className="landing-hero">
         <div className="hero-badge">
           <Sparkles size={16} className="hero-badge-icon" />
-          <span>{vi ? 'GIẢI PHÁP ĐỘC QUYỀN CHO VẤN NẠN THẾ KỶ' : 'THE ULTIMATE LUNCH DECISION MAKER'}</span>
+          <span>{vi ? 'GIẢI PHÁP ĐỘC QUYỀN CHO VẤN NẠN THẾ KỶ' : 'THE ULTIMATE MEAL DECISION MAKER'}</span>
         </div>
 
         <h1 className="hero-title">
@@ -53,14 +53,14 @@ export function LandingPage({ language, onStartSpinning }: LandingPageProps) {
 
         <p className="hero-subtitle">
           {vi
-            ? 'Đừng để 30 phút nghỉ trưa quý báu trôi qua trong vô vọng. Bấm quay một phát — thuật toán ẩm thực chốt hạ món ngon ngay lập tức, khỏi đau đầu suy nghĩ, cấm đổi ý!'
-            : 'Stop wasting precious lunch break debating. One spin and your meal is settled by delicious fate — fair, fast, and no take-backs!'}
+            ? 'Chính mình còn chưa biết thèm món gì, hỏi người khác thì toàn kêu "Sao cũng được" nhưng gợi ý món nào cũng chê! Đừng để cơn đói biến thành đau đầu — bấm quay một phát, thuật toán ẩm thực chốt hạ món ngon ngay lập tức, cấm đổi ý!'
+            : 'You don\'t know what to crave, and everyone answers "Anything" but rejects every suggestion! One spin and your meal is settled by delicious fate — fair, fast, and no take-backs!'}
         </p>
 
         <div className="hero-actions">
           <button className="hero-cta-btn primary" onClick={onStartSpinning}>
             <Sparkles size={20} />
-            <span>{vi ? 'VÀO QUAY CHỌN MÓN NGAY' : 'SPIN FOR LUNCH NOW'}</span>
+            <span>{vi ? 'VÀO QUAY CHỌN MÓN NGAY' : 'SPIN FOR FOOD NOW'}</span>
             <ArrowRight size={18} />
           </button>
           <a href="#how-it-works" className="hero-cta-btn secondary">
@@ -102,8 +102,8 @@ export function LandingPage({ language, onStartSpinning }: LandingPageProps) {
             <h3>{vi ? 'Đi ăn cùng Người Yêu' : 'Dining with Your Partner'}</h3>
             <p className="scenario-quote">
               {vi 
-                ? '— "Trưa nay em ăn gì?"\n— "Ăn gì cũng được anh!"\n— "Ăn bún bò nhé?"\n— "Thôi béo lắm!"\n— "Vậy cơm tấm?"\n— "Khô cổ họng lắm!"'
-                : '— "What do you want to eat?"\n— "Anything is fine!"\n— "Burgers?"\n— "Too greasy!"\n— "Salad?"\n— "Too boring!"'}
+                ? '— "Hôm nay em muốn ăn gì?"\n— "Ăn gì cũng được anh!"\n— "Ăn bún bò nhé?"\n— "Thôi béo lắm!"\n— "Vậy cơm tấm?"\n— "Khô cổ họng lắm!"'
+                : '— "What do you want to eat today?"\n— "Anything is fine!"\n— "Burgers?"\n— "Too greasy!"\n— "Salad?"\n— "Too boring!"'}
             </p>
             <div className="scenario-footer">
               <span className="scenario-tag-fix">{vi ? '💡 Giải pháp: Bấm quay, máy chọn là phải ăn!' : '💡 Fix: Let the wheel decide, no excuses!'}</span>
@@ -114,11 +114,11 @@ export function LandingPage({ language, onStartSpinning }: LandingPageProps) {
             <div className="scenario-icon-wrap amber">
               <Users size={24} />
             </div>
-            <h3>{vi ? 'Team Văn Phòng 10 Người' : 'Office Team of 10'}</h3>
+            <h3>{vi ? 'Nhóm Bạn & Đồng Nghiệp' : 'Friends & Office Group'}</h3>
             <p className="scenario-quote">
               {vi
-                ? '11h30 bắt đầu hỏi: "Hôm nay ăn gì cả nhà ơi?". Đến 12h15 cả nhóm vẫn nhìn nhau, đói mốc meo, app đồ ăn lướt mòn ngón tay vẫn chưa chốt được quán.'
-                : 'At 11:30 AM someone asks "What to order today?". At 12:15 PM everyone is still scrolling delivery apps, hungry and undecided.'}
+                ? 'Hỏi: "Bữa nay ăn gì cả nhà ơi?". Cả nhóm nhìn nhau đói mốc meo, lướt app đồ ăn mòn ngón tay 45 phút vẫn chưa ai chịu chốt được quán.'
+                : 'Asking "What should we eat?". Everyone looks at each other starving, scrolling food delivery apps for 45 minutes still undecided.'}
             </p>
             <div className="scenario-footer">
               <span className="scenario-tag-fix">{vi ? '💡 Giải pháp: Chiếu màn hình, quay 1 phát ăn ngay!' : '💡 Fix: Cast to screen, spin once, done!'}</span>
@@ -132,8 +132,8 @@ export function LandingPage({ language, onStartSpinning }: LandingPageProps) {
             <h3>{vi ? 'Một Mình Tự Hỏi Lòng' : 'Solo Dining Crisis'}</h3>
             <p className="scenario-quote">
               {vi
-                ? 'Mở hết ShopeeFood, GrabFood, Baemin... lướt qua lướt lại 100 quán, cho vào giỏ rồi lại xóa ra, cuối cùng hết giờ nghỉ trưa đành pha mì gói.'
-                : 'Opening every food app, adding dishes to cart, removing them, scrolling 45 minutes, ending up eating instant noodles.'}
+                ? 'Bụng đói nhưng đầu rỗng tuếch không biết thèm món gì. Lướt qua 100 quán trên Grab, ShopeeFood, cho vào giỏ rồi xóa ra, cuối cùng đành pha mì gói.'
+                : 'Hungry but brain is completely blank. Scrolling through 100 restaurants, adding and removing items, ending up eating instant noodles.'}
             </p>
             <div className="scenario-footer">
               <span className="scenario-tag-fix">{vi ? '💡 Giải pháp: Đặt mức giá, quay phát chốt luôn!' : '💡 Fix: Set budget, spin, order immediately!'}</span>
@@ -171,7 +171,7 @@ export function LandingPage({ language, onStartSpinning }: LandingPageProps) {
             <div className="feature-icon emerald">
               <Utensils size={26} />
             </div>
-            <h4>{vi ? 'Hơn 130+ Món Ngon Việt & Á - Âu' : '130+ Popular & Gourmet Dishes'}</h4>
+            <h4>{vi ? 'Hơn 130+ Món Ngon Sáng, Trưa & Tối' : '130+ Dishes for Breakfast, Lunch & Dinner'}</h4>
             <p>{vi ? 'Từ món bình dân quen thuộc (Cơm Tấm, Phở, Bánh Mì, Bún Chả) đến ẩm thực Nhật, Hàn, Thái và món Âu sang trọng.' : 'Comprehensive culinary catalog from traditional street food to gourmet specialties.'}</p>
           </div>
 
@@ -307,11 +307,11 @@ export function LandingPage({ language, onStartSpinning }: LandingPageProps) {
       <section className="landing-final-cta">
         <div className="final-cta-content">
           <div className="cta-icon-float">🍜</div>
-          <h2>{vi ? 'Trưa Nay Bạn Vẫn Chưa Biết Ăn Gì?' : 'Still Wondering What to Eat?'}</h2>
+          <h2>{vi ? 'Bữa Nay Bạn Vẫn Chưa Biết Ăn Gì?' : 'Still Wondering What to Eat?'}</h2>
           <p>
             {vi
-              ? 'Hàng ngàn bữa trưa đã được cứu rỗi. Hãy để vòng quay giải quyết câu hỏi khó khăn nhất trong ngày của bạn ngay bây giờ!'
-              : 'Join thousands of peaceful lunches. Let the wheel solve the hardest question of the day right now!'}
+              ? 'Hàng ngàn bữa ăn đã được giải cứu. Hãy để vòng quay chốt hạ câu hỏi khó khăn nhất trong ngày của bạn ngay bây giờ!'
+              : 'Join thousands of peaceful meals. Let the wheel solve the hardest question of the day right now!'}
           </p>
           <button className="hero-cta-btn primary large" onClick={onStartSpinning}>
             <Sparkles size={22} />
